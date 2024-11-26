@@ -1,27 +1,14 @@
-### StolenByte를 구하시오 Ex) 75156A0068352040
-
-![first.png](./first.png)  
-첫 실행 모습
+### OEP를 구한 후 '등록성공' 으로 가는 분기점의 OPCODE를 구하시오. 정답인증은 OEP + OPCODE EX) 00400000EB03
 
 ![peid.png](./peid.png)  
-UPX로 패킹되어 있는 모습이다. 먼저 언패킹을 진행한 후 디버거를 붙였다.
+ASPack 확인
 
-![error](./error.png)  
-언패킹을 하니 고장난 모습
+![esptrick](./esptrick.png)  
+esp trick을 사용하여 **OEP = 00445834**를 획득
 
 ![oep](./oep.png)  
-언패킹 한 파일을 디버거로 열어보면 MessageBoxA 의 인자 부분이 사라진걸 볼 수 있다.
+실제 OEP의 모습
 
-![pack](./pack.png)
-![stack](./stack.png)  
-패킹된 코드의 popad 부분을 찾아가보면 언패킹된 oep는 0x401000인데 0x40100C로 점프하고,
-점프하기 전 스택에 인자들을 세팅하는 모습을 볼 수 있다.
-
-기본적인 언패킹을 방지하는 안티디버깅이 StolenByte이다.
-
-StolenByte는 다음과 같다.  
-6A 00  
-68 00204000  
-68 12204000
-
-고로 정답은 **6A0068002040006812204000**
+![register](./register.png)  
+문자열 검색으로 register을 찾아 분기하는 코드가 **004454D4** 라는 것을 확인  
+고로 정답은 **004458347555**
