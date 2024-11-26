@@ -1,4 +1,4 @@
-### OEP를 구한 후 '등록성공' 으로 가는 분기점의 OPCODE를 구하시오. 정답인증은 OEP + OPCODE EX) 00400000EB03
+### StolenByte를 구하시오 Ex) 75156A0068352040
 
 ![first.png](./first.png)  
 첫 실행 모습
