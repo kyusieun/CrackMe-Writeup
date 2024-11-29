@@ -1,27 +1,21 @@
-### OEP를 찾으시오. Ex) 00401000 / Stolenbyte 를 찾으시오. Ex) FF35CA204000E84D000000 정답인증은 OEP+ Stolenbyte Ex ) 00401000FF35CA204000E84D000000
+### Name이 CodeEngn일때 Serial을 구하시오
 
-![first.png](./first.png)  
-첫 실행 모습
+![alt text](image.png)  
+Borland Delphi로 개발되었다. 인터넷에 검색해보니 x64dbg로 디버깅이 가능하다고 한다.
 
-![peid.png](./peid.png)  
-UPX로 패킹되어 있는 모습이다. 먼저 언패킹을 진행한 후 디버거를 붙였다.
+![alt text](image-1.png)  
+잘못된 값을 입력하면 Try Again! 이 뜬다. 해당 스트링으로 검색해보면
 
-![error](./error.png)  
-언패킹을 하니 고장난 모습
+![alt text](image-2.png)  
+이렇게 eax와 0x45B844를 비교해서 성공 실패로 분기한다.  
+Name->asdf, Serial->1234로 cmp에 bp를 걸고 실행하면  
+EAX에는 "4D2", 0x45B844에는 "@4"가 담긴다.
 
-![oep](./oep.png)  
-언패킹 한 파일을 디버거로 열어보면 MessageBoxA 의 인자 부분이 사라진걸 볼 수 있다.
+"4D2"는 십진수로 1234 이므로 시리얼 값이 그대로 EAX에 담긴다는 것을 알 수 있다.  
+Name에 "CodeEngn"을 담으면 0x45B844에 어떤 값이 담기는지 확인해보니 "`a" 라는 값이 담겼다. 무슨 값인지 모르겠어서 덤프를 보니 "00006160"이 담겨있었고 십진수로는 24928이었다.
 
-![pack](./pack.png)
-![stack](./stack.png)  
-패킹된 코드의 popad 부분을 찾아가보면 언패킹된 oep는 0x401000인데 0x40100C로 점프하고,
-점프하기 전 스택에 인자들을 세팅하는 모습을 볼 수 있다.
+해당 값을 Serail에 입력해주면
+![alt text](image-3.png)  
+성공이다.
 
-기본적인 언패킹을 방지하는 안티디버깅이 StolenByte이다.
-
-StolenByte는 다음과 같다.  
-6A 00  
-68 00204000  
-68 12204000
-
-고로 정답은 **004010006A0068002040006812204000**
+정답은 **24928**
